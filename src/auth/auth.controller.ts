@@ -108,7 +108,19 @@ export class AuthController {
 
   @Post('register-fact')
   @Public()
+  @ResponseMessage('Tạo tài khoản giả thành công')
   @ApiOperation({ summary: 'Handle Signup' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        count: {
+          type: 'number',
+          example: '100',
+        },
+      },
+    },
+  })
   registerFact(@Body('count') count: number) {
     return this.authService.handleFactRegister(count);
   }
