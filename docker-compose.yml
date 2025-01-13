@@ -1,15 +1,27 @@
+# services:
+#   mongodb:
+#     image: mongo:5.0.15
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: 123456
+#     ports:
+#       - 27017:27017
+#     volumes:
+#       - mongodb_data_container:/data/db
+
+# volumes:
+#   mongodb_data_container:
+
+#     # docker compose -p hungnguyen-mongodb-4rn up -d
+
+version: '3.8'
 services:
-  mongodb:
-    image: mongo:5.0.15
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
-
-volumes:
-  mongodb_data_container:
-
-    # docker compose -p hungnguyen-mongodb-4rn up -d
+      - "8081:8081"
+    environment:
+      - MONGO_URI=mongodb+srv://nguyenmanhhung571999:4caR5pGNpCkPmbGX@cluster0.jzdzs.mongodb.net/
+    command: npm run start:dev
