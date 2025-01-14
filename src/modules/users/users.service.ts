@@ -155,21 +155,21 @@ export class UsersService {
     const batchSize = 10000; // Số user xử lý mỗi lần (tối ưu performance)
     const batches = [];
 
-    for (let i = 0; i < count; i += batchSize) {
-      const password = `123456`;
-      const codeId = uuidv4();
-      const hashedPassword = await hashPasswordHelper(password);
-      const batch = Array.from({ length: batchSize }, () => ({
-        name: faker.internet.displayName(),
-        email: `${uuidv4()}@gmail.com`,
-        password: hashedPassword,
-        isActive: false,
-        codeId: codeId,
-        codeExpired: dayjs().add(5, 'minutes'),
-      }));
+    //for (let i = 0; i < count; i += batchSize) {
+    const password = `123456`;
+    const codeId = uuidv4();
+    const hashedPassword = await hashPasswordHelper(password);
+    const batch = Array.from({ length: count }, () => ({
+      name: faker.internet.displayName(),
+      email: `${uuidv4()}@gmail.com`,
+      password: hashedPassword,
+      isActive: false,
+      codeId: codeId,
+      codeExpired: dayjs().add(5, 'minutes'),
+    }));
 
-      batches.push(this.userModel.insertMany(batch));
-    }
+    batches.push(this.userModel.insertMany(batch));
+    // }
 
     // Chờ tất cả các batch hoàn thành
     await Promise.all(batches);
